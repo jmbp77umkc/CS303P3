@@ -1,8 +1,13 @@
+#ifndef MORSETREE_H
+#define MORSETREE_H
+
 #include "BinTree.h"
 
 class MorseTree {
 private:
-	//bintree<char> Decoder;
+	//CharBinTree Decoder;
 public:
 	MorseTree();
 };
+
+#endif
