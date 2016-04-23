@@ -19,7 +19,7 @@ struct CBTNode {
 };
 
 class CharBinTree {
-private:
+protected:
     CBTNode* root;
     CBTNode* cursor;
     
