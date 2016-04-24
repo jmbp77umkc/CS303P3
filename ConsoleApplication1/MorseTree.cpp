@@ -28,7 +28,10 @@ MorseTree::MorseTree(fstream morse_file)
 		code = line;
 
 		//inserts the line into the tree
-		insert(character, code);
+		if (!insert(character, code))
+		{
+			cout << "Could not insert " << character << " continuing anyway." << endl;
+		}
 	}
 
 	//closes file when done
@@ -103,13 +106,68 @@ string	MorseTree::decode_str(string code_str)
 }
 
 //for encoding a string to morse
+//wrapper function for search function
 string MorseTree::encode_char(char character)
 {
+	morse.setCursorToRoot();
+	string code = "";
 
+	search_m_tree(character, code, false);
+
+	return code;
+}
+string MorseTree::search_m_tree(char& ch, string& code, bool found)
+{
+	CBTNode* current = morse.getCursor();
+
+	if (morse.getCursorData() == ch)
+	{
+		found = true;
+		return code;
+	}
+
+	if (morse.goLeft())
+	{
+		search_m_tree(ch, code, found);
+		if (found)
+		{
+			code += ".";
+			return code;
+		}
+		else
+			morse.setCursor(current);
+	}
+	else if (morse.goRight())
+	{
+		search_m_tree(ch, code, found);
+		if (found)
+		{
+			code += "_";
+			return code;
+		}
+		else
+			morse.setCursor(current);
+	}
+	else
+		return code;
 }
 string MorseTree::encode_str(string str)
 {
-	
+	if (str == "")
+		return "0";
+
+	string::iterator sit;
+	string code = "";
+
+	for (sit = str.begin(); sit != str.end(); sit++)
+	{
+		if (*sit == ' ')
+			code += " ";
+		else
+			code += encode_char(*sit);
+	}
+
+	return code;
 }
 
 //inserts a character based on a string of '.' and '-'
@@ -153,18 +211,11 @@ bool MorseTree::insert(char character, string code)
 			return false;
 	}
 
-	//actual insert of the item
-	//pulls item from location, adds character, and re-sets it
-	CBTNode* current = morse.getCursor();
-	//checks if the item has already been inserted
-	if (current->data == 0)
+	if (morse.getCursorData() == 0)
 	{
-		current->data = character;
-		morse.setCursor(current);
+		morse.setCursotData(character);
 		return true;
 	}
 	else
-	{
 		return false;
-	}
 }
