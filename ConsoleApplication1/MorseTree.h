@@ -4,6 +4,7 @@
 #include "BinTree.h"
 #include <string>
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 //this class is for making a tree for morse coded characters
@@ -20,13 +21,15 @@ public:
 	MorseTree(fstream morse_file);
 
 	//for decoding a string of periods '.' and underscores '_'
-	//both return zero "0" if they fail
+	//all encode/decode methods return zero "0" if they fail
 	char decode_char(string code_char);
 	//assumes string is NOT terminated by a space
 	string	decode_str(string code_str);
 
 	//for encoding a string to morse
+	//wrapper function for search function
 	string encode_char(char character);
+	string search_m_tree(char& ch, string& code, bool found);
 	string encode_str(string str);
 
 	//inserts a character based on a string of periods '.' and underscores '_'

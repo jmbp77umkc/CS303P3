@@ -41,6 +41,7 @@ public:
     CBTNode* getCursor();
     void setCursorToRoot();
     void setCursor(CBTNode* c);
+	void setCursotData(char c);
     char getCursorData();
     bool goLeft(); //true if there is a node to the left
     bool goRight(); //true if there is a node to the right
