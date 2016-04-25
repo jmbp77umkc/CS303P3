@@ -5,7 +5,7 @@ MorseTree::MorseTree()
 	//makes tree of apropriate size
 	morse.initTreeHeight(4);
 }
-MorseTree::MorseTree(fstream morse_file)
+MorseTree::MorseTree(ifstream& morse_file)
 {
 	//if file is not yet open it returns with no tree created
 	if (!morse_file.is_open())
@@ -23,8 +23,8 @@ MorseTree::MorseTree(fstream morse_file)
 	while (morse_file >> line)
 	{
 		//splits the input apart into sections
-		character = line[1];
-		line.erase(1);
+		character = line[0];
+		line.erase(0,1);
 		code = line;
 
 		//inserts the line into the tree
@@ -112,13 +112,21 @@ string MorseTree::encode_char(char character)
 	morse.setCursorToRoot();
 	string code = "";
 
-	search_m_tree(character, code, false);
+	bool found = false;
+
+	search_m_tree(character, code, found);
+
+	if (found == false)
+	{
+		cout << "could not find " << character << " in the tree.";
+	}
 
 	return code;
 }
-string MorseTree::search_m_tree(char& ch, string& code, bool found)
+string MorseTree::search_m_tree(char& ch, string& code, bool& found)
 {
 	CBTNode* current = morse.getCursor();
+
 
 	if (morse.getCursorData() == ch)
 	{
@@ -151,6 +159,7 @@ string MorseTree::search_m_tree(char& ch, string& code, bool found)
 	else
 		return code;
 }
+
 string MorseTree::encode_str(string str)
 {
 	if (str == "")
@@ -179,7 +188,7 @@ bool MorseTree::insert(char character, string code)
 	}
 
 	//weeds out characters that can't exist in morse code
-	if (code == "._._" || code == "___." || code == "____" || code == "__..")
+	if (code == "._._" || code == "___." || code == "____")
 		return false;
 
 	morse.setCursorToRoot(); //loads root of tree
@@ -187,7 +196,7 @@ bool MorseTree::insert(char character, string code)
 
 	//ther are 2 possible characters
 	//this loop searches for the location of the insert using joshes built in cursor
-	for (sit = code.begin(); sit != code.begin(); sit++)
+	for (sit = code.begin(); sit != code.end(); sit++)
 	{
 		if (*sit == '.')
 		{

@@ -18,7 +18,7 @@ public:
 	MorseTree();
 	//can read a file and build from there
 	//closes the file when done
-	MorseTree(fstream morse_file);
+	MorseTree(ifstream& morse_file);
 
 	//for decoding a string of periods '.' and underscores '_'
 	//all encode/decode methods return zero "0" if they fail
@@ -29,7 +29,7 @@ public:
 	//for encoding a string to morse
 	//wrapper function for search function
 	string encode_char(char character);
-	string search_m_tree(char& ch, string& code, bool found);
+	string search_m_tree(char& ch, string& code, bool& found);
 	string encode_str(string str);
 
 	//inserts a character based on a string of periods '.' and underscores '_'
