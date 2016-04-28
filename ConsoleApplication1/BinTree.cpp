@@ -77,7 +77,7 @@ CBTNode* CharBinTree::getCursor() {
     return cursor;
 }
 
-void CharBinTree::setCursotData(char c)
+void CharBinTree::setCursorData(char c)
 {
 	cursor->data = c;
 }

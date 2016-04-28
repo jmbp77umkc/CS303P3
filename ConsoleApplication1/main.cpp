@@ -13,7 +13,7 @@ list<char> readRealWord(string word);
 
 int main() {
     cout << "Successful Compilation." << endl;
-    
+/*    
     //test da tree
     CharBinTree t(8);
     
@@ -31,30 +31,39 @@ int main() {
         else cout << "Failed right." << endl;
     }
     cout << "See ya." << endl;
-    
+*/    
 
     //Kenton
     string line;
-    string word;
+    string word = "";
     list<string> MorseWord; //Each entry is a (string) letter
     list<char> RealWord; //Each entry is a (char) letter
 	ifstream m_file("morse.txt");
     MorseTree MTree(m_file);
+    
+    cout << MTree.encode_str("hello world") << endl;
+    cout << MTree.decode_str(".... . ._.. ._.. ___    .__ ___ ._. ._.. _..");
+    /*
 
-    cin >> line;
+    cout << "Type some morse code: ";
+    while (cin >> line) {
+        word += line+" ";
+    }
 
-    MorseWord = readMorseWord(line);
+    MorseWord = readMorseWord(word);
     for (list<string>::iterator itr = MorseWord.begin(); itr != MorseWord.end(); itr++){
         word += MTree.decode_char(*itr); //Sends MTree a string in morse code (a Morse Code letter)
     }
 
+    cout << "Type one word: ";
+    cin >> line;
     //or
 
     RealWord = readRealWord(line);
     for (list<char>::iterator itr = RealWord.begin(); itr != RealWord.end(); itr++){
         word += MTree.encode_char(*itr) + " "; //Sends MTree a character
     }
-
+*/
 
     //EndKenton
     return 0;

@@ -51,7 +51,7 @@ char MorseTree::decode_char(string code_char)
 	string::iterator sit;
 	morse.setCursorToRoot();
 
-	for (sit = code_char.begin(); sit != code_char.begin(); sit++)
+	for (sit = code_char.begin(); sit != code_char.end(); sit++)
 	{
 		if (*sit == '.')
 		{
@@ -109,12 +109,11 @@ string	MorseTree::decode_str(string code_str)
 //wrapper function for search function
 string MorseTree::encode_char(char character)
 {
-	morse.setCursorToRoot();
 	string code = "";
 
 	bool found = false;
 
-	search_m_tree(character, code, found);
+	search_m_tree(character, code, found, morse.getRoot());
 
 	if (found == false)
 	{
@@ -123,41 +122,33 @@ string MorseTree::encode_char(char character)
 
 	return code;
 }
-string MorseTree::search_m_tree(char& ch, string& code, bool& found)
+string MorseTree::search_m_tree(char& ch, string& code, bool& found, CBTNode* n)
 {
-	CBTNode* current = morse.getCursor();
-
-
-	if (morse.getCursorData() == ch)
+	if (n->data == ch)
 	{
 		found = true;
 		return code;
 	}
 
-	if (morse.goLeft())
+	if (n->left != NULL)
 	{
-		search_m_tree(ch, code, found);
+		search_m_tree(ch, code, found, n->left);
 		if (found)
 		{
-			code += ".";
+			code = "."+code;
 			return code;
 		}
-		else
-			morse.setCursor(current);
 	}
-	else if (morse.goRight())
+	if (n->right != NULL)
 	{
-		search_m_tree(ch, code, found);
+		search_m_tree(ch, code, found, n->right);
 		if (found)
 		{
-			code += "_";
+			code = "_"+code;
 			return code;
 		}
-		else
-			morse.setCursor(current);
 	}
-	else
-		return code;
+	return code;
 }
 
 string MorseTree::encode_str(string str)
@@ -171,9 +162,9 @@ string MorseTree::encode_str(string str)
 	for (sit = str.begin(); sit != str.end(); sit++)
 	{
 		if (*sit == ' ')
-			code += " ";
+			code += "   ";
 		else
-			code += encode_char(*sit);
+			code += encode_char(*sit) + " ";
 	}
 
 	return code;
@@ -222,7 +213,7 @@ bool MorseTree::insert(char character, string code)
 
 	if (morse.getCursorData() == 0)
 	{
-		morse.setCursotData(character);
+		morse.setCursorData(character);
 		return true;
 	}
 	else

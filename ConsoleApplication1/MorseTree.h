@@ -29,7 +29,7 @@ public:
 	//for encoding a string to morse
 	//wrapper function for search function
 	string encode_char(char character);
-	string search_m_tree(char& ch, string& code, bool& found);
+	string search_m_tree(char& ch, string& code, bool& found, CBTNode* n);
 	string encode_str(string str);
 
 	//inserts a character based on a string of periods '.' and underscores '_'
