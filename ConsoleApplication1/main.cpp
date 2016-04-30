@@ -1,8 +1,14 @@
 #include <iostream>
 #include <fstream>
+#include <list>
+#include <sstream>
+
 #include "MorseTree.h"
 
 using namespace std;
+
+list<string> readMorseWord(string code);
+list<char> readRealWord(string word);
 
 int main() {
 
