@@ -77,33 +77,6 @@ char MorseTree::decode_char(string code_char)
 
 	return morse.getCursorData();
 }
-string	MorseTree::decode_str(string code_str)
-{
-	if (code_str == "")
-		return "0";
-
-	string character = "";
-	string decoded_str = "";
-	string::iterator sit;
-
-	for (sit = code_str.begin(); sit != code_str.end(); sit++)
-	{
-		if (*sit == ' ')
-		{
-			decoded_str += decode_char(character);
-			character.clear();
-		}
-		else if (*sit == '.' || *sit == '_')
-		{
-			character += *sit;
-		}
-		else
-			return "0";
-	}
-	decoded_str += decode_char(character);
-
-	return decoded_str;
-}
 
 //for encoding a string to morse
 //wrapper function for search function
@@ -148,25 +121,6 @@ string MorseTree::search_m_tree(char& ch, string& code, bool& found, CBTNode* n)
 			return code;
 		}
 	}
-	return code;
-}
-
-string MorseTree::encode_str(string str)
-{
-	if (str == "")
-		return "0";
-
-	string::iterator sit;
-	string code = "";
-
-	for (sit = str.begin(); sit != str.end(); sit++)
-	{
-		if (*sit == ' ')
-			code += "   ";
-		else
-			code += encode_char(*sit) + " ";
-	}
-
 	return code;
 }
 

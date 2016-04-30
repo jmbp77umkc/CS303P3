@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-//#include "BinTree.h" //shouldn't be needed in final version
 #include "MorseTree.h"
 #include <sstream>
 #include <list>
@@ -12,60 +11,35 @@ list<char> readRealWord(string word);
 
 
 int main() {
-    cout << "Successful Compilation." << endl;
-/*    
-    //test da tree
-    CharBinTree t(8);
-    
-    t.setCursorToRoot();
-    cout << "Went root." << endl;
-    for (int i=0; i<9; ++i) {
-        if (t.goLeft()) cout << "Went left." << endl;
-        else cout << "Failed left." << endl;
-    }
-    
-    t.setCursorToRoot();
-    cout << "Went root." << endl;
-    for (int i=0; i<9; ++i) {
-        if (t.goRight()) cout << "Went right." << endl;
-        else cout << "Failed right." << endl;
-    }
-    cout << "See ya." << endl;
-*/    
 
-    //Kenton
     string line;
     string word = "";
     list<string> MorseWord; //Each entry is a (string) letter
     list<char> RealWord; //Each entry is a (char) letter
-	ifstream m_file("morse.txt");
+    ifstream m_file("morse.txt");
     MorseTree MTree(m_file);
-    
-    cout << MTree.encode_str("hello world") << endl;
-    cout << MTree.decode_str(".... . ._.. ._.. ___    .__ ___ ._. ._.. _..");
-    /*
 
-    cout << "Type some morse code: ";
-    while (cin >> line) {
-        word += line+" ";
-    }
-
-    MorseWord = readMorseWord(word);
+    //decode morse
+    line = "... ___ ...";
+    MorseWord = readMorseWord(line);
     for (list<string>::iterator itr = MorseWord.begin(); itr != MorseWord.end(); itr++){
         word += MTree.decode_char(*itr); //Sends MTree a string in morse code (a Morse Code letter)
     }
+    cout << line << " = " << word << endl;
 
-    cout << "Type one word: ";
-    cin >> line;
-    //or
-
+    //encode morse
+    line = "hello";
+    word = "";
     RealWord = readRealWord(line);
     for (list<char>::iterator itr = RealWord.begin(); itr != RealWord.end(); itr++){
         word += MTree.encode_char(*itr) + " "; //Sends MTree a character
     }
-*/
+    cout << line << " = " << word << endl;
+    
+    //quit
+    cout << "Type crap to quit." << endl;
+    cin >> line;
 
-    //EndKenton
     return 0;
 }
 
@@ -76,15 +50,8 @@ list<string> readMorseWord(string code){
 	list<string> MorseWord;
 	string MorseLetter = " ";
 
-	char next;
-
-	while (ss >> next){
-		if (next == ' ') {
-			MorseWord.push_back(MorseLetter);
-			MorseLetter = "";
-			continue;
-		}
-		MorseLetter += next;
+	while (ss >> MorseLetter){
+		MorseWord.push_back(MorseLetter);
 	}
 
 	return MorseWord;
