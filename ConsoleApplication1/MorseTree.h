@@ -22,7 +22,7 @@ public:
 	MorseTree(ifstream& morse_file);
 
 	//for decoding a string of periods '.' and underscores '_'
-	//all encode/decode methods return zero "0" if they fail
+	//encode/decode methods return zero "0" if they fail
 	char decode_char(string code_char);
 
 	//for encoding a string to morse
